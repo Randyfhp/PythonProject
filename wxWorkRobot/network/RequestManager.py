@@ -1,7 +1,4 @@
-import json
-from copy import copy
 from urllib import parse
-import requests
 
 from wxWorkRobot.network.BaseRequest import BaseRequest
 from wxWorkRobot.network.MultiPartFormat import MultiPartFormat
