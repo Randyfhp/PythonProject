@@ -23,13 +23,15 @@ class TextMessage(BaseMessage):
         self.text['content'] = content
 
     def set_mentioned_list(self, mentioned_list):
-        self.mentioned_list = mentioned_list
+        self.mentioned_list.clear()
+        self.mentioned_list.extend(mentioned_list)
 
     def add_mentioned_list(self, mentioned):
         self.mentioned_list.append(mentioned)
 
     def set_mentioned_mobile_list(self, mentioned_mobile_list):
-        self.mentioned_mobile_list = mentioned_mobile_list
+        self.mentioned_mobile_list.clear()
+        self.mentioned_mobile_list.extend(mentioned_mobile_list)
 
     def add_mentioned_mobile_list(self, mentioned_mobile):
         self.mentioned_mobile_list.append(mentioned_mobile)
