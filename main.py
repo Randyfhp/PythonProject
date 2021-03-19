@@ -1,11 +1,11 @@
 import sys
 
-from msg.TextMessage import TextMessage
-from msg.MarkDownMessage import *
-from msg.ImageMessage import ImageMessage
-from msg.NewsMessage import NewsMessage
-from msg.FileMessage import FileMessage
-from network.RequestManager import RequestManager
+from wxWorkRobot.msg.TextMessage import TextMessage
+from wxWorkRobot.msg.MarkDownMessage import *
+from wxWorkRobot.msg.ImageMessage import ImageMessage
+from wxWorkRobot.msg.NewsMessage import NewsMessage
+from wxWorkRobot.msg.FileMessage import FileMessage
+from wxWorkRobot.network.RequestManager import RequestManager
 
 
 def config_a_text_message():
@@ -31,8 +31,7 @@ def config_a_markdown_message():
 
 def config_a_image_message():
     msg = ImageMessage()
-    msg.set_image("image")
-    msg.set_md5("md5 code")
+    msg.set_image('./src/image_message_test.jpeg')
     return msg
 
 
@@ -45,12 +44,13 @@ def config_a_news_message():
 
 def config_a_file_message(manager):
     msg = FileMessage()
-    media_id = manager.upload_file('./hello world')
+    media_id = manager.upload_file('./hello_world.txt')
     msg.set_file_id(media_id)
     return msg
 
 
 def main(argc, argv):
+    init()
     manager = RequestManager()
     msg = config_a_text_message()
     msg = config_a_markdown_message()
@@ -61,7 +61,11 @@ def main(argc, argv):
     # manager.post_json(msg.__dict__())
 
 
+def init():
+    RequestManager.init_config(
+        'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=db34665b-6227-45ee-92c3-a17f47f38a57')
+
+
 # https://work.weixin.qq.com/api/doc/90000/90136/91770
 if __name__ == '__main__':
-    RequestManager.init_config('https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=db34665b-6227-45ee-92c3-a17f47f38a57')
     main(len(sys.argv), sys.argv)

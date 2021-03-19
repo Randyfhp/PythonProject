@@ -1,4 +1,4 @@
-from msg.BaseMessage import BaseMessage
+from wxWorkRobot.msg.BaseMessage import BaseMessage
 
 
 class MarkDownMessage(BaseMessage):
@@ -64,7 +64,7 @@ class MarkDownCodeStyle(MarDownBaseStyle):
 class MarkDownReferenceStyle(MarDownBaseStyle):
     def __init__(self, text):
         super(MarkDownReferenceStyle, self).__init__(text)
-        self.text = '> {}'.format(self.text)
+        self.text = '\n> {}'.format(self.text)
 
 
 # 字体颜色

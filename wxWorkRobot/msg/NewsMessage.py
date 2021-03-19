@@ -1,4 +1,4 @@
-from msg.BaseMessage import BaseMessage
+from wxWorkRobot.msg.BaseMessage import BaseMessage
 
 
 class NewsMessage(BaseMessage):
