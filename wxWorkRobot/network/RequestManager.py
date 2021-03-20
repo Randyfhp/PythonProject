@@ -68,3 +68,49 @@ class RequestManager(BaseRequest):
         result = self.request_post('upload_media', header, params, data=field)
         print(result)
         return result.get('media_id')
+    
+    # 直接上传文件
+    def upload_file2(self, file_path):
+        params = {
+            'debug': 1,
+            'key': self.BASE_KEY,
+            'type': 'file'
+        }
+        with open(file_path, 'rb') as fd:
+            file_byte = fd.read()
+        files = {
+            'file': (FileUtil.get_file_name(file_path),
+                     file_byte,
+                     FileUtil.get_file_content_type(file_path))
+        }
+        result = self.request_post('upload_media', None, params, data=None, files=files)
+        return result['media_id']
+
+    # 添加参数配置
+    def upload_file3(self, file_path):
+        """
+            POST https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa&type=file HTTP/1.1
+            Content-Type: multipart/form-data; boundary=-------------------------acebdf13572468
+            Content-Length: 220
+            ---------------------------acebdf13572468
+            Content-Disposition: form-data; name="media";filename="wework.txt"; filelength=6
+            Content-Type: application/octet-stream
+            mytext
+            ---------------------------acebdf13572468--
+        """
+        params = {
+            # 'debug': 1,
+            'key': self.BASE_KEY,
+            'type': 'file'
+        }
+        with open(file_path, 'rb') as fd:
+            file_byte = fd.read()
+        files = {
+            'name': (None, 'media'),
+            'filename': (None, FileUtil.get_file_name(file_path)),
+            'filelength': (None, FileUtil.get_file_size(file_path)),
+            'media': (FileUtil.get_file_name(file_path), file_byte, FileUtil.get_file_content_type(file_path))
+        }
+        result = self.request_post('upload_media', None, params, data=None, files=files)
+        print(result)
+        return result['media_id']
