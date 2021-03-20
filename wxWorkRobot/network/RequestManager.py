@@ -67,24 +67,3 @@ class RequestManager(BaseRequest):
         result = self.request_post('upload_media', header, params, data=field)
         print(result)
         return result.get('media_id')
-#
-#     def upload_test(self):
-#         file = '../../hello_world.txt'
-#         file_data = ''
-#         with open(file, 'r') as fp:
-#             file_data = fp.read()
-#         field = """POST https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=db34665b-6227-45ee-92c3-a17f47f38a57&type=file HTTP/1.1
-# 'Content-Type': 'multipart/form-data; boundary=00afab46c316c2a37e2ac90646d5c15f'
-# 'Content-Length': 219
-# --00afab46c316c2a37e2ac90646d5c15f
-# Content-Disposition: form-data; name="media"; filename="hello_world.txt"; filelength={}
-# Content-Type: application/octet-stream
-#
-# {}
-# --00afab46c316c2a37e2ac90646d5c15f--""".format(len(file_data), file_data)
-#
-#         self.post('https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=db34665b-6227-45ee-92c3-a17f47f38a57&type=file', data=field)
-#
-#
-# if __name__ == '__main__':
-#     RequestManager().upload_file('../../hello_world.txt')
