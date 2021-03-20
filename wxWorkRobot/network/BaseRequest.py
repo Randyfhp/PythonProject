@@ -10,22 +10,22 @@ class BaseRequest(object):
     def get_url(self, app):
         return app
 
-    def request_get(self, app, headers=None, params=None):
-        return get(self.get_url(app), params, headers)
+    def request_get(self, app, header=None, params=None):
+        return self.get(self.get_url(app), header, params)
 
-    def get(self, url, params=None, headers=None):
-        with requests.request("GET", url, params=params, headers=headers) as res:
-            print(params, headers, sep='\r\n')
+    def get(self, url, header=None, params=None):
+        with requests.request("GET", self.get_url(app), params=params, headers=header) as res:
+            print(params, header, sep='\r\n')
             print(res.url, res.status_code)
             return self.get_json(res)
 
-    def request_post(self, app, headers=None, params=None, data=None):
+    def request_post(self, app, headers=None, params=None, data=None, **kwargs):
         if isinstance(data, dict):
             data = json.dumps(data)
-        return self.post(self.get_url(app), params, headers, data)
+        return self.post(self.get_url(app), headers, params, data, **kwargs)
 
-    def post(self, url, params=None, headers=None, data=None):
-        with requests.request("POST", url, params=params, headers=headers, data=data) as res:
+    def post(self, url, headers=None, params=None, data=None, **kwargs):
+        with requests.request("POST", url, params=params, headers=headers, data=data, **kwargs) as res:
             print(headers, params, data, sep='\r\n')
             print(res.url, res.status_code)
             return self.get_json(res)
@@ -37,5 +37,4 @@ class BaseRequest(object):
             return res.json()
         except Exception as e:
             print(e.args)
-        finally:
             return {}
