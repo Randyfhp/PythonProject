@@ -22,16 +22,16 @@ def get_file_content_type(file):
     if suffix == '.jpg':
         # jpg图片
         content_type = 'image/jpg'
-    if suffix == '.png':
+    elif suffix == '.png':
         # png图片
         content_type = 'image/png'
-    if suffix == '.bmp':
+    elif suffix == '.bmp':
         # bmp图片
         content_type = 'image/bmp'
-    if suffix == '.amr':
+    elif suffix == '.amr':
         # amr音频
         content_type = 'voice/amr'
-    if suffix == '.mp4':
+    elif suffix == '.mp4':
         # mp4视频
         content_type = 'video/mp4'
     else:
