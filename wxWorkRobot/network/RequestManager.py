@@ -36,6 +36,7 @@ class RequestManager(BaseRequest):
     def post_json(self, data):
         header = {"Content-Type": 'application/json'}
         result = self.request_post('send', header, data=data)
+        return result
 
     @classmethod
     def get_split(cls):
@@ -50,21 +51,40 @@ class RequestManager(BaseRequest):
             "name": 'media',
             "filename": FileUtil.get_file_name(file_path),
             "filelength": FileUtil.get_file_size(file_path),
-            "Content-Type": FileUtil.get_file_content_type(file_path)
         }
         header = {
             "Content-Type": 'multipart/form-data; boundary={}'.format(self.get_split()),
             "Content-Length": 0
         }
         field = MultiPartFormat(header, request).format_str().format(
-            """{}\n\r
-            {}
-            """.format(request['Content-Type'], data))
+            '{}: {}\n\r\n\r{}'.format("Content-Type", FileUtil.get_file_content_type(file_path), data))
         header['Content-Length'] = str(len(field))
         params = {
+            'debug': 1,
             'key': self.BASE_KEY,
             'type': 'file'
         }
         result = self.request_post('upload_media', header, params, data=field)
         print(result)
         return result.get('media_id')
+#
+#     def upload_test(self):
+#         file = '../../hello_world.txt'
+#         file_data = ''
+#         with open(file, 'r') as fp:
+#             file_data = fp.read()
+#         field = """POST https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=db34665b-6227-45ee-92c3-a17f47f38a57&type=file HTTP/1.1
+# 'Content-Type': 'multipart/form-data; boundary=00afab46c316c2a37e2ac90646d5c15f'
+# 'Content-Length': 219
+# --00afab46c316c2a37e2ac90646d5c15f
+# Content-Disposition: form-data; name="media"; filename="hello_world.txt"; filelength={}
+# Content-Type: application/octet-stream
+#
+# {}
+# --00afab46c316c2a37e2ac90646d5c15f--""".format(len(file_data), file_data)
+#
+#         self.post('https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=db34665b-6227-45ee-92c3-a17f47f38a57&type=file', data=field)
+#
+#
+# if __name__ == '__main__':
+#     RequestManager().upload_file('../../hello_world.txt')

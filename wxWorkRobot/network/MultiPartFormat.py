@@ -26,10 +26,10 @@ class MultiPartFormat(object):
         return result
 
     def format_str(self):
-        start = '--{}\r\nContent-Disposition: form-data; '.format(self.boundary)
-        join_str = '{}="{}";'
+        start = '\r\n--{}\r\nContent-Disposition: form-data; '.format(self.boundary)
+        join_str = '{}="{}"; '
         join_value = '{}={};'
-        end_str = '--{}--'.format(self.boundary)
+        end_str = '\r\n--{}--\r\n'.format(self.boundary)
         args_str = ''
         if not isinstance(self.data, dict):
             return args_str
@@ -38,9 +38,9 @@ class MultiPartFormat(object):
                 args_str += join_str.format(key, value)
             else:
                 args_str += join_value.format(key, value)
-        args_str = args_str[0:-1] + '\r\n'
+        args_str = args_str.strip('; ')
         args_str = start + args_str
-        args_str = args_str + '{}\r\n' + end_str
+        args_str = args_str + '\r\n{}' + end_str
         return args_str
 
 
