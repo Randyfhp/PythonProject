@@ -40,7 +40,7 @@ class RequestManager(BaseRequest):
     def post_json(self, data):
         header = {"Content-Type": 'application/json'}
         params = {'key': self.BASE_KEY}
-        result = self.request_post('send', header, data=data)
+        result = self.request_post('send', header, params, data=data)
 
     @classmethod
     def get_split(cls):
