@@ -41,6 +41,7 @@ class RequestManager(BaseRequest):
         header = {"Content-Type": 'application/json'}
         params = {'key': self.BASE_KEY}
         result = self.request_post('send', header, params, data=data)
+        return result
 
     @classmethod
     def get_split(cls):
