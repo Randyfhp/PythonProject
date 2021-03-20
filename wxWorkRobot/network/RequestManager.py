@@ -115,5 +115,4 @@ class RequestManager(BaseRequest):
             'media': (FileUtil.get_file_name(file_path), file_byte, FileUtil.get_file_content_type(file_path))
         }
         result = self.request_post('upload_media', None, params, data=None, files=files)
-        print(result)
         return result['media_id']

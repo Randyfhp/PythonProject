@@ -1,3 +1,7 @@
+import base64
+
+import requests
+
 from wxWorkRobot.msg.BaseMessage import BaseMessage
 from wxWorkRobot.util.Base64Util import Base64Util
 from wxWorkRobot.util.HashUtil import HashUtil
@@ -29,6 +33,5 @@ class ImageMessage(BaseMessage):
             image_byte = file.read()
             image_md = HashUtil.get_md5_hex(image_byte)
             self.set_md5(image_md)
-            image_base64 = Base64Util.encode_bytes(image_byte)
+            image_base64 = Base64Util.encode_bytes(image_byte).decode('utf-8')
             self.set_base64_image(image_base64)
-

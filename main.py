@@ -29,7 +29,7 @@ def config_a_markdown_message():
     return msg
 
 
-def config_a_image_message():
+def config_a_image_message(manager):
     msg = ImageMessage()
     msg.set_image('./src/image_message_test.jpeg')
     return msg
@@ -54,11 +54,11 @@ def main(argc, argv):
     manager = RequestManager()
     msg = config_a_text_message()
     msg = config_a_markdown_message()
-    msg = config_a_image_message()
-    msg = config_a_news_message()
-    msg = config_a_file_message(manager)
-    print(msg.__dict__())
-    # manager.post_json(msg.__dict__())
+    msg = config_a_image_message(manager)
+    # msg = config_a_news_message()
+    # msg = config_a_file_message(manager)
+    # print(msg.__dict__())
+    manager.post_json(msg.__dict__())
 
 
 def init():

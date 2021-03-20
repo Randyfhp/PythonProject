@@ -4,13 +4,13 @@ import base64
 class Base64Util(object):
 
     @staticmethod
+    def encode_bytes(all_byte):
+        return base64.b64encode(all_byte)
+
+    @staticmethod
     def encode_str(string, encoding='utf-8'):
         all_byte = str(string).encode(encoding)
         return Base64Util.encode_bytes(all_byte)
-
-    @staticmethod
-    def encode_bytes(all_byte):
-        return base64.encodebytes(all_byte)
 
     @staticmethod
     def decode_bytes(all_byte):
@@ -18,7 +18,7 @@ class Base64Util(object):
 
     @staticmethod
     def decode_str(all_byte, decoding='utf-8'):
-        return base64.decodebytes(all_byte).decode(decoding)
+        return Base64Util.decode_bytes(all_byte).decode(decoding)
 
 
 # if __name__ == '__main__':
