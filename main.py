@@ -44,7 +44,7 @@ def config_a_news_message():
 
 def config_a_file_message(manager):
     msg = FileMessage()
-    media_id = manager.upload_file('./hello_world.txt')
+    media_id = manager.upload_file3('./hello_world.txt')
     msg.set_file_id(media_id)
     return msg
 
