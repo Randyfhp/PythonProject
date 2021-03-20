@@ -5,6 +5,10 @@ from wxWorkRobot.network.MultiPartFormat import MultiPartFormat
 from wxWorkRobot.util import FileUtil
 from wxWorkRobot.util.HashUtil import HashUtil
 
+"""
+图片上传参考:
+https://blog.csdn.net/xuezhangjun0121/article/details/82023320
+"""
 
 class RequestManager(BaseRequest):
     BASE_URL = ""
@@ -35,6 +39,7 @@ class RequestManager(BaseRequest):
 
     def post_json(self, data):
         header = {"Content-Type": 'application/json'}
+        params = {'key': self.BASE_KEY}
         result = self.request_post('send', header, data=data)
 
     @classmethod
