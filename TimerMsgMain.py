@@ -1,15 +1,17 @@
 import sys
 
-from crawler.BaiduTop.TopDataBean import TopDataBean
+from crawler.WeiboTop.WeiBoTopManager import WeiBoTopManager
+from crawler.bean.TopDataBean import TopDataBean
 from crawler.BaiduTop.BaiduTopManager import BaiduTopManager
 from wxWorkRobot.msg.MarkDownMessage import MarkDownMessage, MarDownTextColorStyle, MarkDownLinkStyle, MarkDownBoldStyle
 from wxWorkRobot.network.RequestManager import RequestManager
 
 
-def config_a_markdown_message(info):
+def config_a_markdown_message(title, info):
     msg = MarkDownMessage()
-    msg_text = str(MarDownTextColorStyle(str(MarkDownBoldStyle('百度热搜榜Top10\n')), MarDownTextColorStyle.ORANGE_READ))\
-               + str(MarDownTextColorStyle('（每小时更新）\n', MarDownTextColorStyle.GRAY))
+    msg_text = str(MarDownTextColorStyle(str(MarkDownBoldStyle('{}热搜榜Top10\n'.format(title))),
+                                         MarDownTextColorStyle.ORANGE_READ)) + \
+               str(MarDownTextColorStyle('（每小时更新）\n', MarDownTextColorStyle.GRAY))
     for item in info:
         if not isinstance(item, TopDataBean):
             continue
@@ -22,9 +24,12 @@ def main(argc, argv):
     init()
     request_manager = RequestManager()
     baidu_manager = BaiduTopManager()
-    msg = config_a_markdown_message(baidu_manager.get_top(10))
-    # print(msg.__dict__())
-    # request_manager.post_json(msg.__dict__())
+    weibo_manager = WeiBoTopManager()
+    msg_baidu = config_a_markdown_message('百度', baidu_manager.get_top(10))
+    msg_weibo = config_a_markdown_message('微博', weibo_manager.get_top(10))
+    # print(msg_weibo.__dict__())
+    request_manager.post_json(msg_baidu.__dict__())
+    request_manager.post_json(msg_weibo.__dict__())
 
 
 def init():

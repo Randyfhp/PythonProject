@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from crawler.BaiduTop.TopDataBean import TopDataBean
+from crawler.bean.TopDataBean import TopDataBean
 
 
 class BaiduTopManager(object):

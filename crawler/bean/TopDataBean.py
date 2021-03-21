@@ -3,7 +3,7 @@ class TopDataBean(object):
         self.index = index
         self.title = title
         self.url = url
-
+        
     def __str__(self):
         return '({},{},{})'.format(self.index, self.title, self.url)
 
